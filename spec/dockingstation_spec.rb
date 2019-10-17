@@ -9,12 +9,6 @@ describe DockingStation do
   expect(dockingstation).to respond_to(:release_bike)
   end
 
-  it "test class method 'release_bike' creates new instance of Bike class if bike in wokrking" do
-    dockingstation = DockingStation.new
-    bike = dockingstation.release_bike
-    expect(bike).to be_an_instance_of(Bike)
-    expect(bike).to be_working
-  end
 
   it "checks instances of DockingStation class respond to dock_bike method" do
     dockingstation = DockingStation.new
@@ -24,7 +18,7 @@ describe DockingStation do
 
   it "checks that dock_bike accepts argument" do
     dockingstation = DockingStation.new
-    bike = dockingstation.release_bike
+    bike = Bike.new
     expect {dockingstation.dock_bike(bike)}.not_to raise_error
   end
 
@@ -35,9 +29,25 @@ describe DockingStation do
 
   it "checks bike we dock is added to stored_bikes array" do
     dockingstation = DockingStation.new
-    bike = dockingstation.release_bike
+    bike = Bike.new
     dockingstation.dock_bike(bike)
     expect(dockingstation.stored_bikes).to include(bike)
   end
+  describe "#release_bike" do
+    it "raises error if user calls release_bike and stored_bikes count == 0" do
+      dockingstation = DockingStation.new
+      expect{dockingstation.release_bike}.to raise_error(StandardError)
+    end
+
+    it "test class method 'release_bike' creates new instance of Bike class if bike in working and stored_bikes count > 0" do
+      dockingstation = DockingStation.new
+      bike = Bike.new
+      dockingstation.dock_bike(bike)
+      expect(bike).to be_an_instance_of(Bike)
+      expect(bike).to be_working
+
+
+  end
+end
 
 end

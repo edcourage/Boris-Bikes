@@ -12,10 +12,12 @@ class DockingStation
 
 
   def release_bike
+    return raise StandardError if @stored_bikes > 0
     Bike.new
   end
 
   def dock_bike(bike)
+
     @stored_bikes << bike
   end
 
