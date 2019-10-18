@@ -10,13 +10,25 @@ class DockingStation
   end
 
   def release_bike
-    return raise StandardError if @stored_bikes.empty?
+    return raise StandardError if empty?
     Bike.new
   end
 
   def dock_bike(bike)
-    raise "station full" if @stored_bikes.length == capacity
+    raise "station full" if full?
     @stored_bikes << bike
   end
+
+  private
+
+  def full?
+    @stored_bikes.length == capacity
+  end
+
+  def empty?
+    @stored_bikes.empty?
+  end
+
+
 
 end
