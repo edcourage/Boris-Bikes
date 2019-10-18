@@ -33,6 +33,7 @@ describe DockingStation do
     dockingstation.dock_bike(bike)
     expect(dockingstation.stored_bikes).to include(bike)
   end
+
   describe "#release_bike" do
     it "raises error if user calls release_bike and stored_bikes count == 0" do
       dockingstation = DockingStation.new
@@ -45,9 +46,15 @@ describe DockingStation do
       dockingstation.dock_bike(bike)
       expect(bike).to be_an_instance_of(Bike)
       expect(bike).to be_working
+    end
+   end
 
-
+   it 'raises error if user try to dock bike and station capacity is full.' do
+    dockingstation = DockingStation.new
+    bike = Bike.new
+    dockingstation.dock_bike(bike)
+    expect{dockingstation.dock_bike(bike)}.to raise_error(RuntimeError, "station full")
   end
-end
+
 
 end
