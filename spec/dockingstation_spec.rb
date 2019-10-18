@@ -49,12 +49,20 @@ describe DockingStation do
     end
    end
 
-   it 'raises error if user try to dock bike and station capacity is full.' do
-    dockingstation = DockingStation.new
+   it 'raises error if user try to dock bike and non default capacity is reached.' do
+    dockingstation = DockingStation.new(1)
     bike = Bike.new
     dockingstation.dock_bike(bike)
     expect{dockingstation.dock_bike(bike)}.to raise_error(RuntimeError, "station full")
   end
 
+  it 'Test default bike capacity is set on initialisation' do
+    dockingstation = DockingStation.new
+    expect(dockingstation.capacity).to eq(DockingStation::DEFAULT_CAPACITY)
+  end
 
+  it 'Test default bike capacity is overridden if given an arg on initialisation' do
+    dockingstation = DockingStation.new(1)
+    expect(dockingstation.capacity).to eq(1)
+  end
 end
